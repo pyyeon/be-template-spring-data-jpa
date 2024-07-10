@@ -41,11 +41,10 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberDto) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto) {
         Member member =
-                memberService.createMember(mapper.memberPostDtoToMember(memberDto));
+                memberService.createMember(mapper.memberPostDtoToMember(memberPostDto));
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
-
         return ResponseEntity.created(location).build();
     }
 
