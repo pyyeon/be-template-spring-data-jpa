@@ -1,4 +1,4 @@
-package qna.question.dto;
+package com.springboot.qna.question.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -94,7 +94,7 @@ public class CoffeeService {
 
     private Coffee findVerifiedCoffeeByQuery(long coffeeId) {
         //  throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
-        Optional<Coffee> optionalCoffee = coffeeRepository.findByCoffee(coffeeId);
+        Optional<Coffee> optionalCoffee = coffeeRepository.findById(coffeeId);
         Coffee findCoffee =
                 optionalCoffee.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.COFFEE_NOT_FOUND));

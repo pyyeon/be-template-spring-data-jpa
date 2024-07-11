@@ -9,7 +9,9 @@ public enum ExceptionCode {
     COFFEE_CODE_EXISTS(409, "Coffee Code exists"),
     ORDER_NOT_FOUND(404, "Order not found"),
     CANNOT_CHANGE_ORDER(403, "Order can not change"),
-    NOT_IMPLEMENTATION(501, "Not Implementation");
+    NOT_IMPLEMENTATION(501, "Not Implementation"),
+    QUESTION_NOT_FOUND(404, "Question not found"),
+    CANNOT_CHANGE_QUESTION(403, "Question can not change");
 
     @Getter
     private int status;

@@ -1,4 +1,4 @@
-package qna.answer.dto;
+package com.springboot.qna.answer.dto;
 
 public class AnswerResponseDTO {
     private Long answerId;

@@ -1,4 +1,4 @@
-package qna.answer.entity;
+package com.springboot.qna.answer.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

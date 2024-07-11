@@ -1,7 +1,8 @@
-package qna.question.entity;
+package com.springboot.qna.question.entity;
 
 import com.springboot.member.entity.Member;
-import qna.answer.entity.Answer;
+import com.springboot.order.entity.OrderCoffee;
+import com.springboot.qna.answer.entity.Answer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,6 +43,7 @@ PUBLIC - 공개글 상태
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+
     @NotBlank
     private String title;
 
@@ -47,14 +51,29 @@ PUBLIC - 공개글 상태
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private QuestionStatus status;
+    private QuestionStatus status = QuestionStatus.QUESTION_ANSWERED;
 
     @Enumerated(EnumType.STRING)
     @Column
-    private Visibility visibility;
+    private Visibility visibility = Visibility.PUBLIC;
 
-    @Column
-    private LocalDate postDate = LocalDate.now();
+    @Column(nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = false, name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt = LocalDateTime.now();
+
+
+
+    public void addMember(Member member) {
+        //member의 입장에서도 연결이 필요함
+        //member가 가지고 있는 orders(List)에
+        //나자신 Member(this)를 추가함
+        if (!member.getQuestions().contains(this)) {
+            member.addQuestion(this);
+        }
+        this.member = member;
+    }
 
     public enum QuestionStatus {
         QUESTION_REGISTERED(1, "질문 등록"),

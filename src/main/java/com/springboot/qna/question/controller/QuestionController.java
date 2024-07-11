@@ -1,5 +1,6 @@
 package com.springboot.qna.question.controller;
 
+import com.springboot.qna.answer.entity.Answer;
 import com.springboot.qna.question.dto.QuestionPatchDTO;
 import com.springboot.qna.question.dto.QuestionPostDTO;
 import com.springboot.qna.question.entity.Question;
@@ -8,16 +9,21 @@ import com.springboot.qna.question.service.QuestionService;
 import com.springboot.response.MultiResponseDto;
 import com.springboot.response.SingleResponseDto;
 import com.springboot.utils.UriCreator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
-
+@RestController
+@RequestMapping("/v11/questions")
+@Validated
+@Slf4j
 public class QuestionController {
 
     private final static String QUESTION_DEFAULT_URL = "/v11/questions";
@@ -31,14 +37,18 @@ public class QuestionController {
     public QuestionController(QuestionService questionService, QuestionMapper mapper) {
         this.questionService = questionService;
         this.mapper = mapper;
+
     }
+
 
 //    postQuestion
 
     @PostMapping
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDTO questionPostDTO){
         Question question =
-                QuestionService.createQuestion(mapper.questionPostDTOToQuestion(questionPostDTO));
+                questionService.createQuestion(mapper.questionPostDTOToQuestion(questionPostDTO));
+        question.setAnswer(new Answer());
+
         URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, question.getQuestionId());
         return ResponseEntity.created(location).build();
     }
@@ -70,7 +80,7 @@ public class QuestionController {
     }
 
     //    deleteQuestion> 질문이 사라지면 답변도 사라짐
-    @DeleteMapping("/{question-id")
+    @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
         questionService.deleteQuestion(questionId);
 

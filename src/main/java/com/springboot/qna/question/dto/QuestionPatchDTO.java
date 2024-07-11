@@ -1,12 +1,9 @@
-package qna.question.dto;
+package com.springboot.qna.question.dto;
 
-import qna.question.entity.Question;
+import com.springboot.qna.question.entity.Question;
 import com.springboot.validator.NotSpace;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Id;
-import javax.validation.constraints.Positive;
 
 @Getter
 public class QuestionPatchDTO {
@@ -21,4 +18,6 @@ public class QuestionPatchDTO {
     private String content;
 
     private Question.QuestionStatus questionStatus;
+
+    private Question.Visibility visibility;
 }

@@ -1,6 +1,7 @@
 package com.springboot.member.entity;
 
 import com.springboot.order.entity.Order;
+import com.springboot.qna.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,8 +32,14 @@ public class Member {
     private LocalDateTime createdAt = LocalDateTime.now();
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
+
+
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Question> questions = new ArrayList<>();
+
 
     // TODO 추가 된 부분
     public enum MemberStatus {
@@ -51,6 +58,18 @@ public class Member {
         orders.add(order);
         if(order.getMember() != this){
             order.addMember(this);
+        }
+        //만든 객체의 오더에 자기 자신이 없으면 애드멤버로 자기 자신을 넣음
+        //그러면 오더 클래스에서 멤버의 오더스에 멤버를 추가함 > 그러면 다시 멤버들어와서 추가
+        //> 순환참조
+        //하나라도 올라가 있다면 멤버 클래스에서 오더스에 오더를 추가
+        //> 객체의 오더에  자기 자신이 없더면 추가 > 오더 클래스에서 오더 있는지 확인 > 있음 > if 조건 충족 못함 >If안에 실행 안 함
+    }
+
+    public void addQuestion(Question question){
+        questions.add(question);
+        if(question.getMember() != this){
+            question.addMember(this);
         }
         //만든 객체의 오더에 자기 자신이 없으면 애드멤버로 자기 자신을 넣음
         //그러면 오더 클래스에서 멤버의 오더스에 멤버를 추가함 > 그러면 다시 멤버들어와서 추가

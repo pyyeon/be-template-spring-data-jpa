@@ -1,8 +1,8 @@
-package qna.question.dto;
+package com.springboot.qna.question.dto;
 
-import qna.question.entity.Question;
+import com.springboot.qna.question.entity.Question;
 import lombok.Getter;
-import lombok.Setter;import qna.question.entity.Question;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -20,7 +20,5 @@ public class QuestionPostDTO {
     @NotBlank(message = "내용은 공백이 아니어야 합니다.")
     private String content;
 
-    @Setter
-    private Question.Visibility visibility;
 
 }
