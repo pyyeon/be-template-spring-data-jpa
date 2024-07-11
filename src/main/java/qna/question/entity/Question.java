@@ -1,6 +1,7 @@
-package com.springboot.qna.entity;
+package qna.question.entity;
 
 import com.springboot.member.entity.Member;
+import qna.answer.entity.Answer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,10 @@ PUBLIC - 공개글 상태
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
+
+    @OneToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answer answer;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")

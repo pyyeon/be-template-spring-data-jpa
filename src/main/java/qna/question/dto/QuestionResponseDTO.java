@@ -1,5 +1,10 @@
-package com.springboot.qna.dto;
+package qna.question.dto;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
 public class QuestionResponseDTO {
     private Long questionId;
     private Long memberId;

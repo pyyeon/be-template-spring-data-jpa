@@ -11,11 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
-    default Member memberPostDtoToMember(MemberPostDto memberPostDto) {
-        Member member = new Member();
-        Order order = new Order();
-        return null;
-    }
+    Member memberPostDtoToMember(MemberPostDto memberPostDto);
 
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
 

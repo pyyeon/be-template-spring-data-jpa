@@ -8,8 +8,10 @@ import lombok.Setter;
 import javax.validation.constraints.Pattern;
 
 // TODO 변경: Setter 없앰
+
 @Getter
 public class MemberPatchDto {
+
     private long memberId;
 
     @NotSpace(message = "회원 이름은 공백이 아니어야 합니다")
