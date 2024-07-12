@@ -1,5 +1,6 @@
 package com.springboot.qna.question.entity;
 
+import com.springboot.audit.Auditable;
 import com.springboot.member.entity.Member;
 import com.springboot.order.entity.OrderCoffee;
 import com.springboot.qna.answer.entity.Answer;
@@ -18,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Question {
+public class Question extends Auditable {
     /* 질문ID Long
 질문등록 날짜 Date > Now로 자동생성
 질문 상태 (초기 상태 값은 QUESTION_REGISTERED) > ENUM
@@ -57,12 +58,17 @@ PUBLIC - 공개글 상태
     @Column
     private Visibility visibility = Visibility.PUBLIC;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "question")
+    private List<Like> likes = new ArrayList<>();
 
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "question")
+    private List<View> views = new ArrayList<>();
 
+//    @Column(nullable = false)
+//    private LocalDateTime createdAt = LocalDateTime.now();
+//
+//    @Column(nullable = false, name = "LAST_MODIFIED_AT")
+//    private LocalDateTime modifiedAt = LocalDateTime.now();
 
 
     public void addMember(Member member) {
@@ -74,6 +80,30 @@ PUBLIC - 공개글 상태
         }
         this.member = member;
     }
+
+    public void setLike(Like like) {
+        likes.add(like);
+        if (like.getQuestion() != this) {
+            like.setQuestion(this);
+        }
+    }
+
+    public void setView(View view) {
+        views.add(view);
+        if (view.getQuestion() != this) {
+            view.setQuestion(this);
+        }
+    }
+
+
+
+    public void removeLike(Like like) {
+        this.likes.remove(like);
+        if (like.getQuestion() == this){
+            like.removeQuestion(this);
+        }
+    }
+
 
     public enum QuestionStatus {
         QUESTION_REGISTERED(1, "질문 등록"),

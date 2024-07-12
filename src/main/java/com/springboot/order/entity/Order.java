@@ -49,10 +49,11 @@ public class Order {
         //member의 입장에서도 연결이 필요함
         //member가 가지고 있는 orders(List)에
         //나자신 Member(this)를 추가함
+        this.member = member;
         if (!member.getOrders().contains(this)) {
             member.addOrder(this);
         }
-        this.member = member;
+
     }
 
     public enum OrderStatus {

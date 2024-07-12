@@ -30,7 +30,7 @@ public class OrderCoffee {
     public void setOrder(Order order){
         this.order = order;
         if (order.getOrderCoffees().contains(this)){
-            order.getOrderCoffees().add(this);
+            order.setOrderCoffee(this);
         }
     }
 }

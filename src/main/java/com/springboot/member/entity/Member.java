@@ -1,6 +1,7 @@
 package com.springboot.member.entity;
 
 import com.springboot.order.entity.Order;
+import com.springboot.qna.question.entity.Like;
 import com.springboot.qna.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
+
+    public void removeLIke(Like like) {
+    }
 
 
     // TODO 추가 된 부분

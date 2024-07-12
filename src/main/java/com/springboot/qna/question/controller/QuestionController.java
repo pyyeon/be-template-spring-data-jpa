@@ -1,8 +1,10 @@
 package com.springboot.qna.question.controller;
 
 import com.springboot.qna.answer.entity.Answer;
+import com.springboot.qna.question.dto.LikeDTO;
 import com.springboot.qna.question.dto.QuestionPatchDTO;
 import com.springboot.qna.question.dto.QuestionPostDTO;
+import com.springboot.qna.question.entity.Like;
 import com.springboot.qna.question.entity.Question;
 import com.springboot.qna.question.mapper.QuestionMapper;
 import com.springboot.qna.question.service.QuestionService;
@@ -37,7 +39,6 @@ public class QuestionController {
     public QuestionController(QuestionService questionService, QuestionMapper mapper) {
         this.questionService = questionService;
         this.mapper = mapper;
-
     }
 
 
@@ -68,6 +69,7 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
         Question question = questionService.findQuestion(questionId);
+        //question
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDTO(question)), HttpStatus.OK);
     }
     //    getQuestion List
@@ -85,6 +87,15 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //좋아요 추가  post
+    @PostMapping("/like")
+    public void postLikeToQuestion(@Valid @RequestBody LikeDTO likeDTO){
+        Like like =
+                questionService.clicklike(mapper.likeDTOToLike(likeDTO));
+
+        new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
