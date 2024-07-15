@@ -12,8 +12,8 @@ public enum ExceptionCode {
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     QUESTION_NOT_FOUND(404, "Question not found"),
     CANNOT_CHANGE_QUESTION(403, "Question can not change"),
-    CANNOT_LIKE(403, "Can not Like")
-    ;
+    CANNOT_LIKE(403, "Can not Like"),
+    CANNOT_CHANGE_MEMBER_STATUS(403, "MemberStatus cannot change" );
 
     @Getter
     private int status;

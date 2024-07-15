@@ -75,10 +75,26 @@ PUBLIC - 공개글 상태
         //member의 입장에서도 연결이 필요함
         //member가 가지고 있는 orders(List)에
         //나자신 Member(this)를 추가함
+        this.member = member;
         if (!member.getQuestions().contains(this)) {
             member.addQuestion(this);
         }
-        this.member = member;
+
+    }
+
+    public void removeMember(Member member) {
+        this.member = null;
+        if (member.getQuestions().contains(this)){
+            member.removeQuestion(this);
+        }
+    }
+
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+        if (answer.getQuestion() != this) {
+            answer.setQuestion(this);
+        }
     }
 
     public void setLike(Like like) {
@@ -95,14 +111,15 @@ PUBLIC - 공개글 상태
         }
     }
 
-
-
+    
     public void removeLike(Like like) {
         this.likes.remove(like);
         if (like.getQuestion() == this){
             like.removeQuestion(this);
         }
     }
+
+
 
 
     public enum QuestionStatus {
@@ -144,4 +161,3 @@ PUBLIC - 공개글 상태
     }
 
 }
-

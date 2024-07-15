@@ -22,7 +22,7 @@ public interface QuestionMapper {
 
     Question questionPatchDTOToQuestion(QuestionPatchDTO questionPatchDTO);
 
-   QuestionResponseDTO questionToQuestionResponseDTO(Question question);
+    QuestionResponseDTO questionToQuestionResponseDTO(Question question);
 
     List<QuestionResponseDTO> questionsToResponseDTOs(List<Question> questions);
 

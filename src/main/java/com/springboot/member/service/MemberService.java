@@ -4,6 +4,7 @@ import com.springboot.exception.BusinessLogicException;
 import com.springboot.exception.ExceptionCode;
 import com.springboot.member.entity.Member;
 import com.springboot.member.repository.MemberRepository;
+import com.springboot.order.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static com.springboot.member.entity.Member.MemberStatus.MEMBER_ACTIVE;
 
 @Service
 public class MemberService {
@@ -65,7 +68,7 @@ public class MemberService {
     public Page<Member> findMembers(int page, int size) {
         // TODO should business logic
         //throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
-    return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
+        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("memberId").descending()));
 
     }
 
@@ -75,6 +78,32 @@ public class MemberService {
         memberRepository.delete(findMember);
         //throw new BusinessLogicException(ExceptionCode.NOT_IMPLEMENTATION);
     }
+
+    public void quitMember(long memberId) {
+        Member findMember = findVerifiedMember(memberId);
+
+        if (findMember.getMemberStatus() != MEMBER_ACTIVE) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_MEMBER_STATUS);
+        }
+        findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+
+        findMember.setModifiedAt(LocalDateTime.now());
+        memberRepository.save(findMember);
+    }
+
+
+    public void sleepMember(long memberId) {
+        Member findMember = findVerifiedMember(memberId);
+
+        if (findMember.getMemberStatus() != MEMBER_ACTIVE) {
+            throw new BusinessLogicException(ExceptionCode.CANNOT_CHANGE_MEMBER_STATUS);
+        }
+
+        findMember.setMemberStatus(Member.MemberStatus.MEMBER_SLEEP);
+        findMember.setModifiedAt(LocalDateTime.now());
+        memberRepository.save(findMember);
+    }
+
 
     public Member findVerifiedMember(Long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);

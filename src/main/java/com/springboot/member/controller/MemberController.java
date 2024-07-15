@@ -50,8 +50,8 @@ public class MemberController {
 
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(// RestAPI :자원(URI)과 행위(메서드)로만 이 기능을 유추할 수 있게
-            @PathVariable("member-id") @Positive long memberId,
-            @Valid @RequestBody MemberPatchDto memberPatchDto) {
+                                      @PathVariable("member-id") @Positive long memberId,
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto) {
         memberPatchDto.setMemberId(memberId);
 
         Member member =
@@ -89,4 +89,25 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity quitMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        memberService.quitMember(memberId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity sleepMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        memberService.sleepMember(memberId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }

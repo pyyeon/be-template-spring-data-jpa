@@ -51,4 +51,6 @@ public class Like {
     public void removeMember(Member member){
         this.member = null;
     }
+
+
 }
