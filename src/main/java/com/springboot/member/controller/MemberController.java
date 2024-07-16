@@ -92,22 +92,22 @@ public class MemberController {
 
 
 
-    @DeleteMapping("/{member-id}")
-    public ResponseEntity quitMember(
-            @PathVariable("member-id") @Positive long memberId) {
-        memberService.quitMember(memberId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
-    @DeleteMapping("/{member-id}")
-    public ResponseEntity sleepMember(
-            @PathVariable("member-id") @Positive long memberId) {
-        memberService.sleepMember(memberId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//    @DeleteMapping("/{member-id}")
+//    public ResponseEntity quitMember(
+//            @PathVariable("member-id") @Positive long memberId) {
+//        memberService.quitMember(memberId);
+//
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+//
+//
+//    @DeleteMapping("/{member-id}")
+//    public ResponseEntity sleepMember(
+//            @PathVariable("member-id") @Positive long memberId) {
+//        memberService.sleepMember(memberId);
+//
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
 
 }

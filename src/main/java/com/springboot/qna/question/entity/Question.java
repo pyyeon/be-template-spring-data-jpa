@@ -111,7 +111,7 @@ PUBLIC - 공개글 상태
         }
     }
 
-    
+
     public void removeLike(Like like) {
         this.likes.remove(like);
         if (like.getQuestion() == this){
