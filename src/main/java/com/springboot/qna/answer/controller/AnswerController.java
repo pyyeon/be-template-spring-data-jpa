@@ -25,6 +25,7 @@ import java.net.URI;
 @Validated
 @Slf4j
 public class AnswerController {
+    private final static String ANSWER_DEFAULT_URL = "/v11/{question-id}/answer";
 
     private final AnswerService answerService;
     private  final AnswerMapper mapper;
@@ -41,7 +42,7 @@ public class AnswerController {
 
         answerPostDTO.setQuestionId(questionId);
         Answer answer = answerService.createAnswer(mapper.answerPostDTOToAnswer(answerPostDTO));
-        URI location = UriCreator.createUri(answer.getAnswerId());
+        URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, answer.getAnswerId());
         return ResponseEntity.created(location).build();
     }
 

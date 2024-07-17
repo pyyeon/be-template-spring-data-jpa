@@ -8,12 +8,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
-
-    @Mapping(source = "memberId", target = "member.memberId")
-    public Answer answerPatchDTOToAnswer(AnswerPatchDTO answerPatchDTO);
+    //source 원본,출발 target 도착,대상
 
     @Mapping(source = "questionId", target = "question.questionId")
-    @Mapping(source = "memberId", target = "member.memberId")
+    public Answer answerPatchDTOToAnswer(AnswerPatchDTO answerPatchDTO);
+
+//    @Mapping(source = "questionId", target = "question.questionId")
     public Answer answerPostDTOToAnswer(AnswerPostDTO answerPostDTO);
 
     public Answer answerToAnswerResponseDTO(Answer answer);

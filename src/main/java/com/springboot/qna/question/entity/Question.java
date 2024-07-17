@@ -34,7 +34,7 @@ PUBLIC - 공개글 상태
  SECRET - 비밀글 상태*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionId;
+    private long questionId;
 
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")
