@@ -52,7 +52,7 @@ PUBLIC - 공개글 상태
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private QuestionStatus status = QuestionStatus.QUESTION_ANSWERED;
+    private QuestionStatus status = QuestionStatus.QUESTION_REGISTERED;
 
     @Enumerated(EnumType.STRING)
     @Column
