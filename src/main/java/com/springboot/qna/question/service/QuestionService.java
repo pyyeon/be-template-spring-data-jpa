@@ -10,6 +10,7 @@ import com.springboot.qna.question.repository.LikeRepository;
 import com.springboot.qna.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
@@ -68,6 +70,25 @@ public class QuestionService {
         return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
+
+    public Page<Question> findQuestionsSortBy(String sortBy, int page, int size) {
+        Sort sort;
+        switch (sortBy) {
+            case "viewCount":
+                sort = Sort.by(Sort.Direction.DESC, "viewCount");
+                break;
+            case "likeCount":
+                sort = Sort.by(Sort.Direction.DESC, "likeCount");
+                break;
+            case "createdAt":
+            default:
+                sort = Sort.by(Sort.Direction.DESC, "createdAt");
+                break;
+        }
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return questionRepository.findAll(pageable);
+    }
+
     public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
         int step = findQuestion.getStatus().getStepNumber();
@@ -93,6 +114,7 @@ public class QuestionService {
 
 
     public void isPublic() {
+        //스테이터스 보고 퍼블릭이면 트루 아니면 거짓
 
     }
 

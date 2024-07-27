@@ -48,7 +48,11 @@ public class QuestionController {
     public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDTO questionPostDTO){
         Question question =
                 questionService.createQuestion(mapper.questionPostDTOToQuestion(questionPostDTO));
+        //실행하는 행위 자체가 프록시 인가ㅣㅏ요?
+        //>>아뇨! 서비스로 불러오는 객체가 프록시 객체 (가짜객체 입니다)
 //        question.setAnswer(new Answer());
+        question =
+                questionService.createQuestion(mapper.questionPostDTOToQuestion(questionPostDTO));
 
         URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, question.getQuestionId());
         return ResponseEntity.created(location).build();
@@ -73,9 +77,9 @@ public class QuestionController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponseDTO(question)), HttpStatus.OK);
     }
     //    getQuestion List
-    @GetMapping
-    public ResponseEntity getQuestions(@Positive @RequestParam int page, @Positive @RequestParam int size){
-        Page<Question> questionPage = questionService.findQuestions(page -1, size);
+    @GetMapping("/sorted/{sortBy}")
+    public ResponseEntity getQuestions(  @PathVariable String sortBy, @Positive @RequestParam int page, @Positive @RequestParam int size){
+        Page<Question> questionPage = questionService.findQuestionsSortBy(sortBy, page -1, size);
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToResponseDTOs(questions), questionPage), HttpStatus.OK);
